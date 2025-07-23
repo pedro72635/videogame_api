@@ -25,7 +25,7 @@ public class VideoGameController {
 
     // GET: Obtener un videojuego por ID
     @GetMapping("/{id}")
-    public ResponseEntity<VideoGame> getVideoGameById(@PathVariable Long id) {
+    public ResponseEntity<VideoGame> getVideoGameById(@PathVariable("id") Long id) {
         Optional<VideoGame> videoGame = videoGameRepository.findById(id);
         return videoGame.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
