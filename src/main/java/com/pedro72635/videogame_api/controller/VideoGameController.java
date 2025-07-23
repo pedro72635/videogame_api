@@ -36,30 +36,30 @@ public class VideoGameController {
     public VideoGame createVideoGame(@RequestBody VideoGame videoGame) {
         return videoGameRepository.save(videoGame);
     }
-
-    // PUT: Actualizar un videojuego
+    
+    //PUT: Actualiazr un videojuego
     @PutMapping("/{id}")
-    public ResponseEntity<VideoGame> updateVideoGame(@PathVariable Long id, @RequestBody VideoGame videoGameDetails) {
-        Optional<VideoGame> videoGame = videoGameRepository.findById(id);
-        if (videoGame.isPresent()) {
-            VideoGame updatedVideoGame = videoGame.get();
-            updatedVideoGame.setTitle(videoGameDetails.getTitle());
-            updatedVideoGame.setGenre(videoGameDetails.getGenre());
-            updatedVideoGame.setPlatform(videoGameDetails.getPlatform());
-            updatedVideoGame.setReleaseYear(videoGameDetails.getReleaseYear());
-            updatedVideoGame.setDeveloper(videoGameDetails.getDeveloper());
-            return ResponseEntity.ok(videoGameRepository.save(updatedVideoGame));
-        }
-        return ResponseEntity.notFound().build();
+public ResponseEntity<VideoGame> updateVideoGame(@PathVariable("id") Long id, @RequestBody VideoGame videoGameDetails) {
+    Optional<VideoGame> videoGame = videoGameRepository.findById(id);
+    if (videoGame.isPresent()) {
+        VideoGame updatedVideoGame = videoGame.get();
+        updatedVideoGame.setTitle(videoGameDetails.getTitle());
+        updatedVideoGame.setGenre(videoGameDetails.getGenre());
+        updatedVideoGame.setPlatform(videoGameDetails.getPlatform());
+        updatedVideoGame.setReleaseYear(videoGameDetails.getReleaseYear());
+        updatedVideoGame.setDeveloper(videoGameDetails.getDeveloper());
+        return ResponseEntity.ok(videoGameRepository.save(updatedVideoGame));
     }
+    return ResponseEntity.notFound().build();
+}
 
-    // DELETE: Eliminar un videojuego
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteVideoGame(@PathVariable Long id) {
-        if (videoGameRepository.existsById(id)) {
-            videoGameRepository.deleteById(id);
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+// DELETE: Eliminar un videojuego
+@DeleteMapping("/{id}")
+public ResponseEntity<Void> deleteVideoGame(@PathVariable("id") Long id) {
+    if (videoGameRepository.existsById(id)) {
+        videoGameRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
+    return ResponseEntity.notFound().build();
+}
 }
